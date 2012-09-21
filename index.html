@@ -152,6 +152,8 @@ function handleResult(data) {
 
 function ytSearch(query) {
   var script = document.createElement('script');
+  var cheats = ['crazy','funny','omg','lol','wtf','wtf'];
+  query += ' ' + cheats[Math.floor(Math.random() * cheats.length)];
   script.setAttribute('id', 'jsonScript');
   script.setAttribute('type', 'text/javascript');
   script.setAttribute('src', 'http://gdata.youtube.com/feeds/videos?vq=' + query + '&max-results=1&alt=json-in-script&' +
