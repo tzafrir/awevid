@@ -7,14 +7,17 @@
     * {
       text-align: center;
       font-family: sans-serif;
-      font-size: 16px;
+      font-size: 20px;
       background-color: #E9E9FF;
+      color: #300909;
+      box-sizing: border-box;
     }
 
     button {
       font-size: 30px;
       font-weight: bold;
-      margin-top: 240px;
+      margin-top: 220px;
+      padding: 20px;
     }
 
     select {
@@ -22,6 +25,33 @@
       margin: 0 10px;
     }
 
+    footer {
+      display: block;
+      position: absolute;
+      bottom: 60px;
+      width: 99%;
+      margin: 0;
+      height: 40px;
+    }
+
+    footer div {
+      display: inline-block;
+    }
+
+    #selects {
+      margin-top: 60px;
+    }
+
+    #gPlus {
+      position: relative;
+      top: 5px;
+    }
+
+    #twitter {
+      position: relative;
+      top: 3px;
+      margin-left: 25px;
+    }
   </style>
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -37,13 +67,21 @@
   </script>
 </head>
 <body onload="onLoad()">
-  <p>
+<div id="fb-root"></div>
+  <p id="selects">
     <select id="nounA"><option></option></select>
     <select id="verb"><option></option></select>
     <select id="nounB"><option></option></select>
   </p>
   <button id="restore">Restore faith in humanity</button>
   <div id="yt"></div>
+  <footer>
+    <p>A <a href="http://google.com/+TzafrirRehan">Tzafrir Rehan</a> Thing</p>
+    <div id="gPlus"><div class="g-plusone"></div></div>
+    <div id="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://AweVid.com" data-text="Restore faith in humanity" data-via="TzafrirR" data-hashtags="AweVid"></a></div>
+    <div class="fb-like" data-href="http://AweVid.com" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-font="arial"></div>
+  </footer>
+
   <script type="text/javascript">
 function chooseRandom(from, num) {
   var grabbed = {};
@@ -651,5 +689,20 @@ function onLoad() {
     google.load("swfobject", "2.1");
     google.load("jquery", "1.7");
   </script>
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </body>
 </html>
