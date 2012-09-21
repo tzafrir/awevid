@@ -105,7 +105,6 @@ function chooseRandom(from, num) {
 }
 
 function attachOptionNodes(list, parent) {
-  $('option[value]').remove();
   for (var i = 0; i < list.length; ++i) {
     var option = $('<option>');
     option
@@ -117,6 +116,7 @@ function attachOptionNodes(list, parent) {
 
 function setOptionNodes() {
   var PEOPLE_NUMBER = 7;
+  $('option[value]').remove();
   var nounsChosenA = chooseRandom(nounsA, PEOPLE_NUMBER);
   attachOptionNodes(nounsChosenA, document.getElementById('nounA'));
   var nounsChosenB = chooseRandom(nounsB, PEOPLE_NUMBER);
