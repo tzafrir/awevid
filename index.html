@@ -1,7 +1,16 @@
 <!doctype html>
 <html>
+<head>
+  <title>AweVid</title>
+  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+  <script type="text/javascript">
+    google.load("swfobject", "2.1");
+  </script>
+</head>
 <body>
-  <select id="nounA"></select><select id="verb"></select><select id="nounB"></select>
+  <p><select id="nounA"></select><select id="verb"></select><select id="nounB"></select></p>
+  <button id="restore">Restore faith in humanity</button>
+  <div id="yt"></div>
 </body>
 <script>
 function chooseRandom(from, num) {
@@ -38,8 +47,53 @@ function setOptionNodes() {
   attachOptionNodes(verbsChosen, document.getElementById('verb'));
 }
 
+function showVideo(videoId) {
+  var params = { allowScriptAccess: "always" };
+  var atts = { id: "ytPlayer", allowFullScreen: true };
+  var urlParams = '&enablejsapi=1&fs=1&autoplay=1';
+  swfobject.embedSWF("http://www.youtube.com/v/" + videoId + urlParams + "&playerapiid=v",
+                     "yt", "480", "295", "8", null, null, params, atts);
+}
+
+function handleResult(data) {
+  var feed = data.feed;
+  var entries = feed.entry || [];
+  if (entries.length == 0) {
+    // TODO
+  } else {
+    var entry = entries[0];
+    showVideo(entry.id.$t.match(/\/([^\/]+)$/)[1]);
+  }
+}
+
+function ytSearch(query) {
+  var script = document.createElement('script');
+  script.setAttribute('id', 'jsonScript');
+  script.setAttribute('type', 'text/javascript');
+  script.setAttribute('src', 'http://gdata.youtube.com/feeds/videos?vq=' + query + '&max-results=1&alt=json-in-script&' +
+         'callback=handleResult&orderby=relevance&' +
+         'sortorder=descending&format=5&fmt=18');
+
+  document.documentElement.firstChild.appendChild(script);
+}
+
+function val(id) {
+  return document.getElementById(id).value;
+}
+
+function setHandlers() {
+  document.getElementById('restore').onclick = function() {
+    ytSearch(val('nounA') + ' ' + val('verb') + ' ' + val('nounB'));
+    document.querySelector('button').style.display = 'none';
+    [].forEach.call(document.querySelectorAll('select'), function(sel) {
+      sel.disabled = true;
+    });
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function() {
   setOptionNodes();
+  setHandlers();
 });
 
   var nounsA = [
