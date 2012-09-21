@@ -155,7 +155,14 @@ function val(id) {
 
 function setHandlers() {
   document.getElementById('restore').onclick = function() {
-    ytSearch(val('nounA') + ' ' + val('verb') + ' ' + val('nounB'));
+    var nA = val('nounA');
+    var nB = val('nounB');
+    var v = val('verb');
+    if (nA == '' && nB == '' && v == '') {
+      $('#nounA').focus();
+      return;
+    }
+    ytSearch(nA + ' ' + v + ' ' + nB);
     document.querySelector('button').style.display = 'none';
     [].forEach.call(document.querySelectorAll('select'), function(sel) {
       sel.disabled = true;
