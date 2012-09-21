@@ -1,18 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
   <title>AweVid</title>
   <script src="http://www.google.com/jsapi" type="text/javascript"></script>
   <script type="text/javascript">
     google.load("swfobject", "2.1");
+    google.load("jquery", "1.7");
   </script>
 </head>
-<body>
+<body onload="onLoad()">
   <p><select id="nounA"></select><select id="verb"></select><select id="nounB"></select></p>
   <button id="restore">Restore faith in humanity</button>
   <div id="yt"></div>
-</body>
-<script>
+  <script type="text/javascript">
 function chooseRandom(from, num) {
   var grabbed = {};
   var result = [];
@@ -31,9 +32,11 @@ function chooseRandom(from, num) {
 
 function attachOptionNodes(list, parent) {
   for (var i = 0; i < list.length; ++i) {
-    var option = document.createElement('option');
-    option.value = option.innerText = list[i];
-    parent.appendChild(option);
+    var option = $('<option>');
+    option
+      .val(list[i])
+      .text(list[i])
+      .appendTo(parent);
   }
 }
 
@@ -91,10 +94,10 @@ function setHandlers() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+function onLoad() {
   setOptionNodes();
   setHandlers();
-});
+}
 
   var nounsA = [
     "apple",
@@ -612,3 +615,5 @@ document.addEventListener("DOMContentLoaded", function() {
     "would",
     "write"];
 </script>
+</body>
+</html>
