@@ -16,7 +16,7 @@
     button {
       font-size: 30px;
       font-weight: bold;
-      margin-top: 220px;
+      margin-top: 20px;
       padding: 20px;
     }
 
@@ -36,6 +36,10 @@
 
     footer div {
       display: inline-block;
+    }
+
+    #restore {
+      margin-top: 220px;
     }
 
     #selects {
@@ -73,8 +77,9 @@
     <select id="verb"><option></option></select>
     <select id="nounB"><option></option></select>
   </p>
-  <button id="restore">Restore faith in humanity</button>
-  <div id="yt"></div>
+  <button id="restore">Restore faith in humanity</button><br>
+  <div id="yt"></div><br>
+  <button id="again" style="display: none;">Again</button>
   <footer>
     <p>A <a href="http://google.com/+TzafrirRehan">Tzafrir Rehan</a> Thing</p>
     <div id="gPlus"><div class="g-plusone"></div></div>
@@ -100,6 +105,7 @@ function chooseRandom(from, num) {
 }
 
 function attachOptionNodes(list, parent) {
+  $('option[value]').remove();
   for (var i = 0; i < list.length; ++i) {
     var option = $('<option>');
     option
@@ -119,12 +125,18 @@ function setOptionNodes() {
   attachOptionNodes(verbsChosen, document.getElementById('verb'));
 }
 
+var embedded = false;
 function showVideo(videoId) {
-  var params = { allowScriptAccess: "always" };
-  var atts = { id: "ytPlayer", allowFullScreen: true };
-  var urlParams = '&enablejsapi=1&fs=1&autoplay=1';
-  swfobject.embedSWF("http://www.youtube.com/v/" + videoId + urlParams + "&playerapiid=v",
-                     "yt", "480", "295", "8", null, null, params, atts);
+  if (!embedded) {
+    var params = { allowScriptAccess: "always" };
+    var atts = { id: "ytPlayer", allowFullScreen: true };
+    var urlParams = '&enablejsapi=1&fs=1&autoplay=1';
+    swfobject.embedSWF("http://www.youtube.com/v/" + videoId + urlParams + "&playerapiid=v",
+                       "yt", "480", "295", "8", null, null, params, atts);
+    embedded = true;
+  } else {
+    document.getElementById('ytPlayer').loadVideoById(videoId);
+  }
 }
 
 function handleResult(data) {
@@ -167,7 +179,16 @@ function setHandlers() {
     [].forEach.call(document.querySelectorAll('select'), function(sel) {
       sel.disabled = true;
     });
-  }
+    $('#again').show();
+  };
+  $('#again').click(function() {
+    $('select').val('').attr({disabled: false});
+    setOptionNodes();
+    var yt = document.getElementById('ytPlayer');
+    yt.pauseVideo();
+    $(this).hide();
+    $('#restore').show();
+  });
 }
 
 function onLoad() {
@@ -708,8 +729,9 @@ function onLoad() {
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
   js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  js.async = true;
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.async = true;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </body>
 </html>
